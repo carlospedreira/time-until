@@ -54,6 +54,9 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "allowedHosts": ["time.carlospedreira.com"]
+          },
           "configurations": {
             "production": {
               "buildTarget": "time-until:build:production"
