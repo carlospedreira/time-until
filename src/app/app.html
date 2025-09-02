@@ -53,6 +53,13 @@
 @if (!showTimePicker() && remainingTime()) {
   <div class="countdown-container">
     <div class="countdown-display">
+      @if (remainingTime()!.hours > 0) {
+        <div class="time-unit">
+          <span class="time-value">{{formatTime(remainingTime()!.hours)}}</span>
+          <span class="time-label">Hours</span>
+        </div>
+        <div class="time-separator-large">:</div>
+      }
       <div class="time-unit">
         <span class="time-value">{{formatTime(remainingTime()!.minutes)}}</span>
         <span class="time-label">Minutes</span>
@@ -63,6 +70,70 @@
         <span class="time-label">Seconds</span>
       </div>
     </div>
+  </div>
+}
+
+<!-- Help Modal -->
+@if (showHelp()) {
+  <div class="help-overlay" (click)="toggleHelp()">
+    <div class="help-modal" (click)="$event.stopPropagation()">
+      <div class="help-header">
+        <h2>URL Usage Guide</h2>
+        <button class="help-close" (click)="toggleHelp()">×</button>
+      </div>
+      <div class="help-content">
+        <div class="help-section">
+          <h3>Specific Time (Absolute)</h3>
+          <div class="help-examples">
+            <div class="help-example">
+              <code>?time=14:30</code>
+              <span>Timer until 2:30 PM today</span>
+            </div>
+            <div class="help-example">
+              <code>?hour=14&minute=30</code>
+              <span>Timer until 2:30 PM today</span>
+            </div>
+            <div class="help-example">
+              <code>?hour=15</code>
+              <span>Timer until 3:00 PM (or 15 min from now if currently 3:XX PM)</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="help-section">
+          <h3>Duration Timer (Relative)</h3>
+          <div class="help-examples">
+            <div class="help-example">
+              <code>?duration=15</code>
+              <span>Timer for 15 minutes from now</span>
+            </div>
+            <div class="help-example">
+              <code>?duration=5</code>
+              <span>Timer for 5 minutes from now</span>
+            </div>
+            <div class="help-example">
+              <code>?duration=120</code>
+              <span>Timer for 2 hours from now</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+<!-- Help Button (Bottom Right) -->
+<button class="help-button-fixed" (click)="toggleHelp()" title="Show URL usage help">
+  ?
+</button>
+
+<!-- Toast Notification -->
+@if (toastMessage()) {
+  <div 
+    class="toast" 
+    [class.show]="showToast()"
+  >
+    {{ toastMessage() }}
   </div>
 }
 
